@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  grafana:
+    image: grafana/grafana:9.2.0
+    volumes:
+        - ./grafana/data:/var/lib/grafana
+        - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - "3111:3000"
+    environment:
+      GF_DATABASE_TYPE: mysql
+      GF_DATABASE_HOST: grafana_db:3306
+      GF_DATABASE_NAME: grafana
+      GF_DATABASE_USER: grafana
+      GF_DATABASE_PASSWORD: grafana_password
+      GF_INSTALL_PLUGINS: marcusolsson-gantt-panel
+      GF_SECURITY_ADMIN_PASSWORD: admin_password
+    depends_on: 
+      - grafana_db
+
+  grafana_db:
+    image: mysql:5.7
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: grafana
+      MYSQL_USER: grafana
+      MYSQL_PASSWORD: grafana_password
+    command:
+      [
+        mysqld,
+        --character-set-server=utf8mb4,
+        --collation-server=utf8mb4_unicode_ci,
+        --innodb_monitor_enable=all,
+        --max-connections=1001,
+      ]
+  
