@@ -35,4 +35,16 @@ services:
         --innodb_monitor_enable=all,
         --max-connections=1001,
       ]
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 3112:80
+    environment:
+      - PMA_HOST=grafana_db
+      - MYSQL_ROOT_PASSWORD=root_password
+      - PMA_ARBITRARY=1
+    depends_on:
+      - grafana_db
   
