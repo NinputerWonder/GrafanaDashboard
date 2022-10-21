@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS
+    bug_info;
+DROP TABLE IF EXISTS
+    bug_level;
+DROP TABLE IF EXISTS
+    bug_reason;
+DROP TABLE IF EXISTS
+    risk;
+DROP TABLE IF EXISTS
+    test_coverage;
+
 CREATE TABLE bug_level(
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     description VARCHAR(1024) NOT NULL
